@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Miscs on CTF Docs</title><link>https://n-wn.github.io/ctf-docs/misc/</link><description>Recent content in Miscs on CTF Docs</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://n-wn.github.io/ctf-docs/misc/index.xml" rel="self" type="application/rss+xml"/><item><title>Memory Forensics</title><link>https://n-wn.github.io/ctf-docs/misc/memory_forensics/</link><pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate><guid>https://n-wn.github.io/ctf-docs/misc/memory_forensics/</guid><description>&lt;hr>
-&lt;h2 id="otterctf-2018--内存取证分析报告">OtterCTF 2018 — 内存取证分析报告&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Miscs on</title><link>/misc/</link><description>Recent content in Miscs on</description><generator>Hugo</generator><language>en</language><atom:link href="/misc/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>/misc/memory_forensics/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/misc/memory_forensics/</guid><description>&lt;h2 id="otterctf-2018--内存取证分析报告">OtterCTF 2018 — 内存取证分析报告&lt;/h2>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>&lt;a href="https://monliclican.medium.com/hsb-presents-otterctf-2018-memory-forensics-write-up-c3b9e372c36c">[hsb] Presents: OtterCTF 2018 — Memory Forensics Write-Up&lt;/a>&lt;/p>
 &lt;h3 id="准备工作">准备工作&lt;/h3>
@@ -23,4 +22,4 @@
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>volatility -f OtterCTF.vmem --profile&lt;span style="color:#f92672">=&lt;/span>Win7SP1x64 dumpregistry -o &amp;lt;Hive虚拟内存地址&amp;gt; -D &amp;lt;输出目录&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;li>
-&lt;p>**对转储的 Hive 执行快速 &lt;code>regripper&lt;/code> 分析&lt;/p></description></item></channel></rss>
+&lt;p>&lt;strong>对转储的 Hive 执行快速 &lt;code>regripper&lt;/code> 分析&lt;/strong>&lt;/p></description></item></channel></rss>
