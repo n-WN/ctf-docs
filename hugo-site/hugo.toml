@@ -1,0 +1,6 @@
+module = "github.com/ctf-docs/hugo-site"
+
+baseURL = "https://n-wn.github.io/ctf-docs/"
+languageCode = "zh-cn"
+title = "CTF Docs"
+theme = "ananke"
