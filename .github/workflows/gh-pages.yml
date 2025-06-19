@@ -26,12 +26,14 @@ jobs:
         run: |
           npm install
         continue-on-error: true
+        working-directory: ./hugo-site
 
       - name: Build site
         run: hugo --minify
+        working-directory: ./hugo-site
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./hugo-site/public
