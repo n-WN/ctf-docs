@@ -1,3 +1,8 @@
+---
+title: "Memory Forensics"
+date: 2025-06-19
+---
+
 ## OtterCTF 2018 — 内存取证分析报告
 
 ## Reference
