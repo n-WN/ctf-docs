@@ -14,12 +14,13 @@
     <!-- Visualization & Content Choices: 
         1. 进程内存布局: 目标=组织/通知 -> 方式=HTML/CSS交互式图表 -> 交互=鼠标悬停显示详细信息 -> 理由=比静态图片更具探索性，允许用户主动学习内存段的用途和权限 -> 库=无。
         2. 栈与函数调用 (动画): 目标=解释流程 -> 方式=HTML/CSS/JS分步动画，包含寄存器视图和代码行指示器 -> 交互=点击按钮触发栈帧、寄存器状态和代码行箭头同步变化 -> 理由=精确模拟x86-64调用约定，将抽象的函数调用过程具体化、可视化，建立底层操作和上层代码的直接联系。
-        3. 汇编语言：从零开始: 目标=教学/通知 -> 方式=HTML/CSS卡片式布局，故事化讲解 -> 交互=无 -> 理由=采用情景化教学法，详细拆解核心汇编指令，解释其在程序中的作用和对CPU状态的影响，为初学者建立坚实的汇编基础。
-        4. 汇编基础术语: 目标=通知 -> 方式=HTML/CSS卡片式布局 -> 交互=无 -> 理由=以清晰、结构化的方式呈现核心汇编术语的定义和解释，便于查阅和学习。
-        5. C到汇编探索: 目标=比较/通知 -> 方式=HTML/CSS/JS代码高亮和悬浮提示 -> 交互=鼠标悬停在C代码行上，汇编代码同步高亮；悬停在汇编代码的特定部分，弹出上下文相关的解释 -> 理由=建立高级语言和底层实现之间的直观、深度联系，解释每个汇编指令的精确作用。
-        6. PLT & GOT 流程: 目标=解释流程 -> 方式=HTML/CSS分步点击流程图 -> 交互=点击“下一步”按钮高亮并显示流程中的当前步骤 -> 理由=将复杂的延迟绑定过程分解，逐步引导用户理解，比大段文字更有效 -> 库=无。
-        7. 漏洞利用技术对比: 目标=比较 -> 方式=Chart.js雷达图和动态内容切换 -> 交互=点击按钮切换不同的技术，图表和文本描述会相应更新 -> 理由=雷达图能直观地展示多种技术在多个维度（要求、绕过、防御）上的优劣势，交互性使用户能聚焦于单个技术的分析 -> 库=Chart.js。
-        8. ROP链构建: 目标=组织/通知 -> 方式=简化的点击式交互界面 -> 交互=用户点击“Gadgets”和“数据”来模拟在栈上构建ROP链的过程，并获得即时反馈 -> 理由=将抽象的ROP链概念具体化、游戏化，加深对栈布局和Gadget链接原理的理解 -> 库=无。
+        3. 编译与链接: 目标=教学/通知 -> 方式=HTML/CSS卡片式分步讲解 -> 交互=无 -> 理由=以情景化方式解释从源代码到可执行文件的完整流程，特别是阐明静态库与共享库(.so)的区别，为理解PLT/GOT奠定基础。
+        4. 汇编语言：从零开始: 目标=教学/通知 -> 方式=HTML/CSS卡片式布局，故事化讲解 -> 交互=无 -> 理由=采用情景化教学法，详细拆解核心汇编指令，解释其在程序中的作用和对CPU状态的影响，为初学者建立坚实的汇编基础。
+        5. 汇编基础术语: 目标=通知 -> 方式=HTML/CSS卡片式布局 -> 交互=无 -> 理由=以清晰、结构化的方式呈现核心汇编术语的定义和解释，便于查阅和学习。
+        6. C到汇编探索: 目标=比较/通知 -> 方式=HTML/CSS/JS代码高亮和悬浮提示 -> 交互=鼠标悬停在C代码行上，汇编代码同步高亮；悬停在汇编代码的特定部分，弹出上下文相关的解释 -> 理由=建立高级语言和底层实现之间的直观、深度联系，解释每个汇编指令的精确作用。
+        7. PLT & GOT 流程: 目标=解释流程 -> 方式=HTML/CSS分步点击流程图 -> 交互=点击“下一步”按钮高亮并显示流程中的当前步骤 -> 理由=将复杂的延迟绑定过程分解，逐步引导用户理解，比大段文字更有效 -> 库=无。
+        8. 漏洞利用技术对比: 目标=比较 -> 方式=Chart.js雷达图和动态内容切换 -> 交互=点击按钮切换不同的技术，图表和文本描述会相应更新 -> 理由=雷达图能直观地展示多种技术在多个维度（要求、绕过、防御）上的优劣势，交互性使用户能聚焦于单个技术的分析 -> 库=Chart.js。
+        9. ROP链构建: 目标=组织/通知 -> 方式=简化的点击式交互界面 -> 交互=用户点击“Gadgets”和“数据”来模拟在栈上构建ROP链的过程，并获得即时反馈 -> 理由=将抽象的ROP链概念具体化、游戏化，加深对栈布局和Gadget链接原理的理解 -> 库=无。
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -139,6 +140,7 @@
                     <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">第一部分: 基础</h2>
                     <a href="#intro" data-section="intro" class="nav-link block p-3 rounded-lg">运行中程序的内部图景</a>
                     <a href="#stack-animation" data-section="stack-animation" class="nav-link block p-3 rounded-lg">栈与函数调用 (动画)</a>
+                    <a href="#compilation-linking" data-section="compilation-linking" class="nav-link block p-3 rounded-lg">从源代码到可执行文件</a>
                     <a href="#assembly-from-scratch" data-section="assembly-from-scratch" class="nav-link block p-3 rounded-lg">汇编语言：从零开始</a>
                     <a href="#assembly-basics" data-section="assembly-basics" class="nav-link block p-3 rounded-lg">汇编基础术语</a>
                     <a href="#assembly-explorer" data-section="assembly-explorer" class="nav-link block p-3 rounded-lg">C 到汇编 (探索)</a>
@@ -262,6 +264,64 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- Section: Compilation and Linking -->
+            <section id="compilation-linking" class="content-section">
+                <h2 class="text-4xl font-bold text-white mb-4">从源代码到可执行文件</h2>
+                <p class="text-lg text-gray-400 mb-8">我们写的C代码是如何变成一个可以运行的程序的？理解这个过程——编译、汇编、链接——是理解PLT/GOT和共享库（<code class="code-inline">.so</code>文件）的前提。让我们跟随一个简单的 <code class="code-inline">hello.c</code> 文件，走完它的整个生命周期。</p>
+
+                <div class="space-y-8">
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4 flex items-center"><span class="text-3xl mr-4">①</span> 预处理 (Preprocessing)</h3>
+                        <p class="mb-4 text-gray-300">旅程的第一步。预处理器像一个秘书，它处理所有以 <code class="code-inline">#</code> 开头的指令。最常见的任务是：</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
+                            <li><code class="code-inline">#include &lt;stdio.h&gt;</code>: 将头文件的内容直接“粘贴”到你的代码中。</li>
+                            <li><code class="code-inline">#define PI 3.14</code>: 进行简单的文本替换。</li>
+                        </ul>
+                        <p class="mt-4 text-gray-300">这个阶段的输出仍然是人类可读的C代码，只是内容更完整了。</p>
+                        <div class="text-center mt-4 font-mono text-amber-300">hello.c → (gcc -E) → hello.i</div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4 flex items-center"><span class="text-3xl mr-4">②</span> 编译 (Compilation)</h3>
+                        <p class="mb-4 text-gray-300">这是核心的翻译工作。编译器（如GCC）接收预处理后的C代码，并将其翻译成对应平台的汇编语言。这是我们从高级语言到低级语言的第一步。</p>
+                        <p class="mt-4 text-gray-300">这个阶段的输出是汇编代码文件，通常以 <code class="code-inline">.s</code> 或 <code class="code-inline">.asm</code> 结尾。</p>
+                        <div class="text-center mt-4 font-mono text-amber-300">hello.i → (gcc -S) → hello.s</div>
+                    </div>
+                    
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4 flex items-center"><span class="text-3xl mr-4">③</span> 汇编 (Assembly)</h3>
+                        <p class="mb-4 text-gray-300">汇编器（Assembler）接管汇编代码，并将其翻译成CPU能直接理解的机器码。但是，这些机器码还不能直接运行。</p>
+                        <p class="mt-4 text-gray-300">输出是一个“目标文件”（Object File），通常以 <code class="code-inline">.o</code> 结尾。它包含了程序的机器码、数据，以及一张“符号表”。这张表记录了像 <code class="code-inline">main</code> 这样的函数名，但对于外部函数如 <code class="code-inline">printf</code>，它只有一个标记，表示“我需要这个函数，但不知道它在哪”。</p>
+                        <div class="text-center mt-4 font-mono text-amber-300">hello.s → (gcc -c) → hello.o</div>
+                    </div>
+                    
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4 flex items-center"><span class="text-3xl mr-4">④</span> 链接 (Linking)</h3>
+                        <p class="mb-4 text-gray-300">这是最后一步，也是最关键的一步。链接器（Linker, <code class="code-inline">ld</code>）的工作是把多个目标文件（<code class="code-inline">.o</code>）和库文件粘合在一起，解决所有悬而未决的地址引用，最终生成一个可执行文件。这里有两种主要的链接方式。</p>
+                        
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-cyan-400">
+                                <h4 class="text-xl font-bold text-cyan-300 mb-2">静态链接 (Static Linking)</h4>
+                                <p class="text-gray-400"><strong>方式:</strong> 链接器会找到所有需要的函数（比如 <code class="code-inline">printf</code>），然后把它们的机器码从静态库（<code class="code-inline">.a</code> 文件）中完整地复制到最终的可执行文件中。</p>
+                                <p class="text-gray-400 mt-2"><strong>结果:</strong> 一个庞大但自给自足的可执行文件。它不依赖任何外部库文件就能运行。</p>
+                                <p class="text-gray-400 mt-2"><strong>优点:</strong> 部署简单，没有依赖问题。</p>
+                                <p class="text-gray-400 mt-2"><strong>缺点:</strong> 文件体积大，多个程序会包含同一份库代码，造成冗余；库更新后，所有程序都必须重新编译。</p>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-purple-400">
+                                <h4 class="text-xl font-bold text-purple-300 mb-2">动态链接 (Dynamic Linking)</h4>
+                                <p class="text-gray-400"><strong>方式:</strong> 链接器在处理对 <code class="code-inline">printf</code> 的调用时，并**不**复制它的代码。相反，它做两件事：</p>
+                                <ol class="list-decimal list-inside text-gray-400 ml-4 mt-2">
+                                    <li>在可执行文件中留下一个小小的“存根”（stub），这就是PLT的作用。</li>
+                                    <li>记录下一个依赖项：“这个程序需要 <code class="code-inline">libc.so.6</code>”。</li>
+                                </ol>
+                                <p class="text-gray-400 mt-2"><strong>结果:</strong> 一个体积小巧的可执行文件。当它运行时，操作系统会看到这个依赖项，并由动态链接器（<code class="code-inline">/lib/ld-linux.so.2</code>）在内存中加载 <code class="code-inline">libc.so.6</code>，然后才真正把二者联系起来。这就是GOT表被填充的时刻。</p>
+                                 <p class="text-gray-400 mt-2"><strong><code class="code-inline">.so</code>文件 (Shared Object)</strong> 就是为这种方式而生的、可被多个程序在运行时共享的库文件。这正是我们<code class="code-inline">ret2libc</code>攻击的目标。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Section: Assembly From Scratch -->
             <section id="assembly-from-scratch" class="content-section">
@@ -332,7 +392,7 @@
                             </li>
                             <li class="mt-4"><strong><code class="code-inline">ret</code></strong>: 这个指令只做一件事：
                                 <ol class="list-decimal list-inside text-gray-400 mt-2 ml-6">
-                                     <li><strong>回家</strong>: 从栈顶弹出一个值，并无条件跳转到这个值所代表的地址。</li>
+                                     <li>**回家</strong>: 从栈顶弹出一个值，并无条件跳转到这个值所代表的地址。</li>
                                 </ol>
                             </li>
                         </ul>
