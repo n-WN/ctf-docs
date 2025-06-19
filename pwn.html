@@ -56,6 +56,14 @@
             background-color: #f59e0b;
             color: #1f2937;
         }
+        .code-inline {
+            background-color: #374151; /* gray-700 */
+            color: #fcd34d; /* amber-300 */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9em;
+        }
         /* Stack Animation Styles */
         #code-arrow {
             transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
@@ -175,7 +183,7 @@
                         <div class="memory-segment group border-2 border-dashed border-purple-400 bg-purple-900/30 p-4 rounded-lg">
                              <span class="font-bold text-purple-300">堆 (Heap) ↑</span>
                              <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 p-3 bg-gray-700 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-                                <strong>用途:</strong> 动态内存分配 (`malloc`)。<br>
+                                <strong>用途:</strong> 动态内存分配 (<code class="code-inline">malloc</code>)。<br>
                                 <strong>权限:</strong> $rw-$<br>
                                 <strong>增长方向:</strong> 向上（高地址）<br>
                                 <strong>攻击相关:</strong> 堆溢出、UAF等高级利用的目标。
@@ -206,7 +214,7 @@
             <!-- Section: Stack Animation -->
             <section id="stack-animation" class="content-section">
                 <h2 class="text-4xl font-bold text-white mb-4">栈与函数调用 (动画演示)</h2>
-                <p class="text-lg text-gray-400 mb-8">栈是理解漏洞利用的关键。本节将通过动画精确演示一个x86-64函数调用是如何在底层操纵栈和寄存器的。点击“下一步”，观察`main`调用`add`函数时，参数传递、栈帧创建和返回的完整过程。</p>
+                <p class="text-lg text-gray-400 mb-8">栈是理解漏洞利用的关键。本节将通过动画精确演示一个x86-64函数调用是如何在底层操纵栈和寄存器的。点击“下一步”，观察<code class="code-inline">main</code>调用<code class="code-inline">add</code>函数时，参数传递、栈帧创建和返回的完整过程。</p>
                 <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div>
@@ -262,19 +270,19 @@
                     <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                         <h3 class="text-2xl font-bold text-amber-400 mb-4">数据类型指示符 (Size Directives)</h3>
                         <p class="mb-6 text-gray-300">汇编指令需要知道操作数据的大小。这些指示符明确了内存操作的字节数。</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm">
-                            <div class="bg-gray-800 p-4 rounded-lg"><strong>DWORD:</strong> "双字", 32位 (4字节). 对应 C 中的 `int`.</div>
-                            <div class="bg-gray-800 p-4 rounded-lg"><strong>QWORD:</strong> "四字", 64位 (8字节). 对应 C 中的指针或 `long long`.</div>
-                            <div class="bg-gray-800 p-4 rounded-lg"><strong>WORD:</strong> "字", 16位 (2字节). 对应 C 中的 `short`.</div>
-                            <div class="bg-gray-800 p-4 rounded-lg"><strong>BYTE:</strong> "字节", 8位 (1字节). 对应 C 中的 `char`.</div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gray-800 p-4 rounded-lg"><strong>DWORD:</strong> "双字", 32位 (4字节). 对应 C 中的 <code class="code-inline">int</code>.</div>
+                            <div class="bg-gray-800 p-4 rounded-lg"><strong>QWORD:</strong> "四字", 64位 (8字节). 对应 C 中的指针或 <code class="code-inline">long long</code>.</div>
+                            <div class="bg-gray-800 p-4 rounded-lg"><strong>WORD:</strong> "字", 16位 (2字节). 对应 C 中的 <code class="code-inline">short</code>.</div>
+                            <div class="bg-gray-800 p-4 rounded-lg"><strong>BYTE:</strong> "字节", 8位 (1字节). 对应 C 中的 <code class="code-inline">char</code>.</div>
                         </div>
                     </div>
 
                     <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                         <h3 class="text-2xl font-bold text-amber-400 mb-4">内存操作指示符</h3>
                         <div class="bg-gray-800 p-4 rounded-lg">
-                            <p class="font-mono text-lg mb-2"><strong>PTR (Pointer)</strong></p>
-                            <p class="text-gray-300">PTR告诉汇编器，方括号 `[]` 里的内容是一个内存地址，而不是一个数字。它总是和大小指示符（如`DWORD`）一起使用，形成 <code class="bg-gray-700 text-amber-300 px-2 py-1 rounded">DWORD PTR</code> 这样的组合，意为“请将[...]地址处的内存看作一个32位的值”。</p>
+                            <p class="text-lg mb-2"><strong>PTR (Pointer)</strong></p>
+                            <p class="text-gray-300">PTR告诉汇编器，方括号 <code class="code-inline">[]</code> 里的内容是一个内存地址，而不是一个数字。它总是和大小指示符（如<code class="code-inline">DWORD</code>）一起使用，形成 <code class="code-inline">DWORD PTR</code> 这样的组合，意为“请将[...]地址处的内存看作一个32位的值”。</p>
                         </div>
                     </div>
                     
@@ -283,7 +291,7 @@
                          <p class="mb-6 text-gray-300">寄存器是CPU内部的高速存储单元，是计算和数据操作的“工作台”。</p>
                         <div class="space-y-4">
                             <div class="bg-gray-800 p-4 rounded-lg"><strong>RBP (Base Pointer):</strong> 通常指向当前函数栈帧的“底部”，作为访问局部变量和参数的稳定基准点。</div>
-                            <div class="bg-gray-800 p-4 rounded-lg"><strong>RSP (Stack Pointer):</strong> 始终指向栈的“顶部”（最低地址处）。`push`和`pop`操作会直接修改RSP。</div>
+                            <div class="bg-gray-800 p-4 rounded-lg"><strong>RSP (Stack Pointer):</strong> 始终指向栈的“顶部”（最低地址处）。<code class="code-inline">push</code>和<code class="code-inline">pop</code>操作会直接修改RSP。</div>
                             <div class="bg-gray-800 p-4 rounded-lg"><strong>RIP (Instruction Pointer):</strong> 存放下一条将要被CPU执行的指令的地址。控制RIP是所有控制流劫持攻击的最终目标。</div>
                             <div class="bg-gray-800 p-4 rounded-lg"><strong>RAX:</strong> 通常用于存放函数返回值。</div>
                             <div class="bg-gray-800 p-4 rounded-lg"><strong>RDI, RSI, RDX, RCX...:</strong> 用于传递函数的前几个参数（在x86-64 Linux中）。控制这些寄存器是ROP攻击的关键。</div>
@@ -293,11 +301,11 @@
                     <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                         <h3 class="text-2xl font-bold text-amber-400 mb-4">综合示例分析</h3>
                         <p class="mb-4 text-gray-300">让我们重新审视一下这行代码，将所有概念联系起来：</p>
-                        <div class="bg-gray-800 p-4 rounded-lg font-mono text-center text-lg">
-                            <code class="text-amber-300">mov DWORD PTR [rbp-0x14], edi</code>
+                        <div class="bg-gray-800 p-4 rounded-lg text-center text-lg">
+                            <code class="code-inline">mov DWORD PTR [rbp-0x14], edi</code>
                         </div>
                         <p class="mt-4 text-gray-300">
-                           这句话的完整含义是：“将传入的第一个32位参数（存放在`edi`寄存器中），复制（`mov`）到当前函数栈帧里、距离栈底`rbp`偏移`0x14`的那个4字节（`DWORD PTR`）内存位置。”
+                           这句话的完整含义是：“将传入的第一个32位参数（存放在<code class="code-inline">edi</code>寄存器中），复制（<code class="code-inline">mov</code>）到当前函数栈帧里、距离栈底<code class="code-inline">rbp</code>偏移<code class="code-inline">0x14</code>的那个4字节（<code class="code-inline">DWORD PTR</code>）内存位置。”
                         </p>
                     </div>
                 </div>
@@ -320,7 +328,7 @@
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold text-amber-400 mb-4">x86-64 汇编 (GCC -O0)</h3>
-                             <pre class="bg-gray-800 p-4 rounded-lg"><code id="asm-code-container" class="whitespace-pre-wrap leading-relaxed">
+                             <pre class="bg-gray-800 p-4 rounded-lg"><code id="asm-code-container" class="whitespace-pre-wrap">
 <div class="asm-line" data-line="1">simple_add:</div>
 <div class="asm-line" data-line="1">  <span class="asm-token" data-key="push">push</span>   <span class="asm-token" data-key="rbp">rbp</span></div>
 <div class="asm-line" data-line="1">  <span class="asm-token" data-key="mov">mov</span>    <span class="asm-token" data-key="rbp">rbp</span>, <span class="asm-token" data-key="rsp">rsp</span></div>
@@ -342,19 +350,19 @@
             <!-- Section: PLT & GOT -->
             <section id="plt-got" class="content-section">
                 <h2 class="text-4xl font-bold text-white mb-4">PLT 与 GOT：动态链接的桥梁</h2>
-                <p class="text-lg text-gray-400 mb-8">程序如何调用共享库（如libc）中的函数？答案在于PLT和GOT的精妙协作。这是一个“延迟绑定”的过程，即函数地址只在第一次被调用时才解析。下方的交互式流程图将分步展示这个过程。请点击“下一步”来观察函数（以`puts`为例）首次被调用时的完整流程。</p>
+                <p class="text-lg text-gray-400 mb-8">程序如何调用共享库（如<code class="code-inline">libc</code>）中的函数？答案在于PLT和GOT的精妙协作。这是一个“延迟绑定”的过程，即函数地址只在第一次被调用时才解析。下方的交互式流程图将分步展示这个过程。请点击“下一步”来观察函数（以<code class="code-inline">puts</code>为例）首次被调用时的完整流程。</p>
                 <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                     <div id="flowchart-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center">
                         <div id="flow-step-1" class="flowchart-step bg-gray-800 p-6 rounded-lg border-2 border-transparent">
                             <div class="text-amber-400 text-5xl mb-2">①</div>
                             <h3 class="text-xl font-bold mb-2">程序代码</h3>
-                            <p>`call puts@plt`</p>
-                            <p class="text-sm text-gray-400">执行流跳转到PLT中的`puts`存根。</p>
+                            <p><code class="code-inline">call puts@plt</code></p>
+                            <p class="text-sm text-gray-400">执行流跳转到PLT中的<code class="code-inline">puts</code>存根。</p>
                         </div>
                         <div id="flow-step-2" class="flowchart-step bg-gray-800 p-6 rounded-lg border-2 border-transparent">
                             <div class="text-amber-400 text-5xl mb-2">②</div>
                             <h3 class="text-xl font-bold mb-2">PLT 存根</h3>
-                            <p>`jmp [puts@got.plt]`</p>
+                            <p><code class="code-inline">jmp [puts@got.plt]</code></p>
                             <p class="text-sm text-gray-400">跳转到GOT表项中存储的地址。</p>
                         </div>
                         <div id="flow-step-3" class="flowchart-step bg-gray-800 p-6 rounded-lg border-2 border-transparent">
@@ -366,19 +374,19 @@
                         <div id="flow-step-4" class="flowchart-step bg-gray-800 p-6 rounded-lg border-2 border-transparent">
                            <div class="text-amber-400 text-5xl mb-2">④</div>
                             <h3 class="text-xl font-bold mb-2">PLT (续)</h3>
-                            <p>`push id; jmp resolver`</p>
+                            <p><code class="code-inline">push id; jmp resolver</code></p>
                             <p class="text-sm text-gray-400">准备参数并跳转到动态链接器。</p>
                         </div>
                         <div id="flow-step-5" class="flowchart-step bg-gray-800 p-6 rounded-lg border-2 border-transparent">
                             <div class="text-amber-400 text-5xl mb-2">⑤</div>
                             <h3 class="text-xl font-bold mb-2">链接器解析</h3>
-                            <p>`_dl_runtime_resolve()`</p>
-                            <p class="text-sm text-gray-400">查找`puts`真实地址，并用它覆写GOT表项。</p>
+                            <p><code class="code-inline">_dl_runtime_resolve()</code></p>
+                            <p class="text-sm text-gray-400">查找<code class="code-inline">puts</code>真实地址，并用它覆写GOT表项。</p>
                         </div>
                          <div id="flow-step-6" class="flowchart-step bg-gray-800 p-6 rounded-lg border-2 border-transparent">
                             <div class="text-amber-400 text-5xl mb-2">⑥</div>
                             <h3 class="text-xl font-bold mb-2">GOT 表项 (更新后)</h3>
-                            <p>指向 libc 中的 `puts` 函数</p>
+                            <p>指向 libc 中的 <code class="code-inline">puts</code> 函数</p>
                             <p class="text-sm text-gray-400">绑定完成！后续调用将直接跳转到libc。</p>
                         </div>
                     </div>
@@ -391,7 +399,7 @@
             
             <section id="ret2text" class="content-section">
                 <h2 class="text-4xl font-bold text-white mb-4">技术一: ret2text (返回到代码段)</h2>
-                <p class="text-lg text-gray-400 mb-6">这是最直接的漏洞利用技术。当程序存在一个栈溢出漏洞时，我们可以覆写返回地址，使其指向程序自身`.text`段中已经存在的某个函数，例如一个开发者留下的“后门”函数 (`win()`)。这种方法的优点是简单直接，并且能天然绕过NX保护，因为代码段本身就是可执行的。</p>
+                <p class="text-lg text-gray-400 mb-6">这是最直接的漏洞利用技术。当程序存在一个栈溢出漏洞时，我们可以覆写返回地址，使其指向程序自身<code class="code-inline">.text</code>段中已经存在的某个函数，例如一个开发者留下的“后门”函数 (<code class="code-inline">win()</code>)。这种方法的优点是简单直接，并且能天然绕过NX保护，因为代码段本身就是可执行的。</p>
                 <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                     <h3 class="text-2xl font-bold text-amber-400 mb-4">攻击载荷结构</h3>
                     <div class="font-mono text-center bg-gray-800 p-4 rounded-lg">
@@ -400,13 +408,13 @@
                         <span class="text-green-400"> [ win() 函数的地址 ] </span>
                     </div>
                     <h3 class="text-2xl font-bold text-amber-400 mt-8 mb-4">核心思想</h3>
-                    <p>利用栈溢出，将`ret`指令要跳转的地址，从原始的调用者地址，精准地替换为我们想要执行的、程序中已有的另一个函数的地址。这就像是篡改了火车时刻表上的下一站地址，让火车开往一个意想不到的目的地。</p>
+                    <p>利用栈溢出，将<code class="code-inline">ret</code>指令要跳转的地址，从原始的调用者地址，精准地替换为我们想要执行的、程序中已有的另一个函数的地址。这就像是篡改了火车时刻表上的下一站地址，让火车开往一个意想不到的目的地。</p>
                 </div>
             </section>
 
             <section id="ret2shellcode" class="content-section">
                 <h2 class="text-4xl font-bold text-white mb-4">技术二: ret2shellcode (返回到Shellcode)</h2>
-                <p class="text-lg text-gray-400 mb-6">如果程序中没有方便的“后门”函数可供调用，我们可以尝试自己注入一小段机器码（称为shellcode），然后劫持控制流去执行它。通常，我们会把shellcode放置在栈上，并通过溢出将返回地址指向这段shellcode的起始位置。这种技术威力强大，能实现任意代码执行。</p>
+                <p class="text-lg text-gray-400 mb-6">如果程序中没有方便的“后门”函数可供调用，我们可以尝试自己注入一小段机器码（称为<code class="code-inline">shellcode</code>），然后劫持控制流去执行它。通常，我们会把<code class="code-inline">shellcode</code>放置在栈上，并通过溢出将返回地址指向这段<code class="code-inline">shellcode</code>的起始位置。这种技术威力强大，能实现任意代码执行。</p>
                  <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                     <h3 class="text-2xl font-bold text-amber-400 mb-4">攻击载荷结构</h3>
                     <div class="font-mono text-center bg-gray-800 p-4 rounded-lg flex flex-wrap justify-center items-center gap-2">
@@ -421,24 +429,24 @@
                     <h3 class="text-2xl font-bold text-amber-400 mt-8 mb-4">主要挑战</h3>
                     <ul class="list-disc list-inside space-y-2 text-gray-300">
                         <li><strong>NX (数据执行保护):</strong> 这是最主要的障碍。现代系统通常会禁止在栈上执行代码。如果NX开启，此技术直接失效。</li>
-                        <li><strong>ASLR (地址空间布局随机化):</strong> 栈的地址是随机的，我们无法硬编码一个精确的shellcode地址。需要配合信息泄漏来定位。</li>
-                        <li><strong>坏字符:</strong> 像`\x00` (空字节) 这样的字符可能会截断我们的输入，导致shellcode注入不完整。</li>
+                        <li><strong>ASLR (地址空间布局随机化):</strong> 栈的地址是随机的，我们无法硬编码一个精确的<code class="code-inline">shellcode</code>地址。需要配合信息泄漏来定位。</li>
+                        <li><strong>坏字符:</strong> 像<code class="code-inline">\x00</code> (空字节) 这样的字符可能会截断我们的输入，导致<code class="code-inline">shellcode</code>注入不完整。</li>
                     </ul>
                 </div>
             </section>
             
             <section id="ret2libc" class="content-section">
                 <h2 class="text-4xl font-bold text-white mb-4">技术三: ret2libc & ROP</h2>
-                <p class="text-lg text-gray-400 mb-6">为了绕过NX保护，我们不再注入自己的代码，而是重用（return to）已加载的共享库（libc）中的代码。例如，我们可以调用libc中的`system()`函数来获取shell。但如何向`system()`传递参数（如"/bin/sh"）呢？这就引出了返回导向编程（ROP）的概念。我们通过寻找代码中以`ret`结尾的小片段（gadgets），精心构造一个“ROP链”，像搭积木一样，先调用`pop rdi; ret`这样的gadget来设置参数，最后再调用`system`函数。</p>
+                <p class="text-lg text-gray-400 mb-6">为了绕过NX保护，我们不再注入自己的代码，而是重用（return to）已加载的共享库（<code class="code-inline">libc</code>）中的代码。例如，我们可以调用<code class="code-inline">libc</code>中的<code class="code-inline">system()</code>函数来获取shell。但如何向<code class="code-inline">system()</code>传递参数（如<code class="code-inline">"/bin/sh"</code>）呢？这就引出了返回导向编程（ROP）的概念。我们通过寻找代码中以<code class="code-inline">ret</code>结尾的小片段（gadgets），精心构造一个“ROP链”，像搭积木一样，先调用<code class="code-inline">pop rdi; ret</code>这样的gadget来设置参数，最后再调用<code class="code-inline">system</code>函数。</p>
                 <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
-                    <h3 class="text-2xl font-bold text-amber-400 mb-4">ROP链模拟器: 调用 system("/bin/sh")</h3>
+                    <h3 class="text-2xl font-bold text-amber-400 mb-4">ROP链模拟器: 调用 <code class="code-inline">system("/bin/sh")</code></h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <h4 class="text-xl font-bold mb-4">可用资源</h4>
                             <div class="space-y-3">
-                                <button data-rop="pop rdi" class="rop-item w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded-lg transition-colors">Gadget: pop rdi; ret</button>
-                                <button data-rop="system" class="rop-item w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded-lg transition-colors">函数: system()</button>
-                                <button data-rop="/bin/sh" class="rop-item w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded-lg transition-colors">数据: "/bin/sh" 地址</button>
+                                <button data-rop="pop rdi" class="rop-item w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded-lg transition-colors">Gadget: <code class="code-inline">pop rdi; ret</code></button>
+                                <button data-rop="system" class="rop-item w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded-lg transition-colors">函数: <code class="code-inline">system()</code></button>
+                                <button data-rop="/bin/sh" class="rop-item w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded-lg transition-colors">数据: <code class="code-inline">"/bin/sh"</code> 地址</button>
                             </div>
                              <button id="rop-reset-btn" class="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-bold p-3 rounded-lg transition-colors">重置ROP链</button>
                         </div>
@@ -454,17 +462,17 @@
 
             <section id="one-gadget" class="content-section">
                  <h2 class="text-4xl font-bold text-white mb-4">技术四: one-gadget</h2>
-                <p class="text-lg text-gray-400 mb-6">One-gadget是ROP的一种优雅的快捷方式。在libc中，存在一些“神奇”的地址，只要直接跳转到那里，在满足某些寄存器状态（如`rsi == NULL`）的前提下，就能直接获得一个shell。这种方法省去了手动构建ROP链的麻烦，但其成功与否依赖于是否能满足它的前置约束条件。</p>
+                <p class="text-lg text-gray-400 mb-6"><code class="code-inline">one-gadget</code>是ROP的一种优雅的快捷方式。在<code class="code-inline">libc</code>中，存在一些“神奇”的地址，只要直接跳转到那里，在满足某些寄存器状态（如<code class="code-inline">rsi == NULL</code>）的前提下，就能直接获得一个shell。这种方法省去了手动构建ROP链的麻烦，但其成功与否依赖于是否能满足它的前置约束条件。</p>
                  <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
                     <h3 class="text-2xl font-bold text-amber-400 mb-4">核心思想</h3>
-                    <p class="mb-4">寻找并利用libc中“一步到位”的gadget。这就像是在游戏中找到了一个可以直接通关的秘密传送门，但前提是你必须持有正确的“钥匙”（满足寄存器约束）。</p>
+                    <p class="mb-4">寻找并利用<code class="code-inline">libc</code>中“一步到位”的gadget。这就像是在游戏中找到了一个可以直接通关的秘密传送门，但前提是你必须持有正确的“钥匙”（满足寄存器约束）。</p>
                     <div class="bg-gray-800 p-4 rounded-lg font-mono">
                         <p class="text-green-400"># 运行 one_gadget 工具</p>
                         <p>$ one_gadget /lib/x86_64-linux-gnu/libc.so.6</p>
                         <p class="mt-2 text-gray-400">0x4f322 execve("/bin/sh", rsp+0x40, environ) <span class="text-red-400">constraints: [rsp+0x40] == NULL</span></p>
                         <p class="text-gray-400">0x10a41c execve("/bin/sh", rsp+0x70, environ) <span class="text-red-400">constraints: [rsp+0x70] == NULL</span></p>
                     </div>
-                    <p class="mt-4">漏洞利用者的任务就是：泄漏libc基地址，然后检查在程序返回的时刻，是否有某个one-gadget的约束条件恰好被满足。如果满足，只需一次跳转即可成功；如果不满足，则还是需要退回到传统的ROP方法。</p>
+                    <p class="mt-4">漏洞利用者的任务就是：泄漏<code class="code-inline">libc</code>基地址，然后检查在程序返回的时刻，是否有某个<code class="code-inline">one-gadget</code>的约束条件恰好被满足。如果满足，只需一次跳转即可成功；如果不满足，则还是需要退回到传统的ROP方法。</p>
                 </div>
             </section>
             
