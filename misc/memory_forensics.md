@@ -1,5 +1,3 @@
------
-
 ## OtterCTF 2018 — 内存取证分析报告
 
 ## Reference
