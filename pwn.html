@@ -14,11 +14,12 @@
     <!-- Visualization & Content Choices: 
         1. 进程内存布局: 目标=组织/通知 -> 方式=HTML/CSS交互式图表 -> 交互=鼠标悬停显示详细信息 -> 理由=比静态图片更具探索性，允许用户主动学习内存段的用途和权限 -> 库=无。
         2. 栈与函数调用 (动画): 目标=解释流程 -> 方式=HTML/CSS/JS分步动画，包含寄存器视图和代码行指示器 -> 交互=点击按钮触发栈帧、寄存器状态和代码行箭头同步变化 -> 理由=精确模拟x86-64调用约定，将抽象的函数调用过程具体化、可视化，建立底层操作和上层代码的直接联系。
-        3. 汇编基础术语: 目标=通知 -> 方式=HTML/CSS卡片式布局 -> 交互=无 -> 理由=以清晰、结构化的方式呈现核心汇编术语的定义和解释，便于查阅和学习。
-        4. C到汇编探索: 目标=比较/通知 -> 方式=HTML/CSS/JS代码高亮和悬浮提示 -> 交互=鼠标悬停在C代码行上，汇编代码同步高亮；悬停在汇编代码的特定部分，弹出上下文相关的解释 -> 理由=建立高级语言和底层实现之间的直观、深度联系，解释每个汇编指令的精确作用。
-        5. PLT & GOT 流程: 目标=解释流程 -> 方式=HTML/CSS分步点击流程图 -> 交互=点击“下一步”按钮高亮并显示流程中的当前步骤 -> 理由=将复杂的延迟绑定过程分解，逐步引导用户理解，比大段文字更有效 -> 库=无。
-        6. 漏洞利用技术对比: 目标=比较 -> 方式=Chart.js雷达图和动态内容切换 -> 交互=点击按钮切换不同的技术，图表和文本描述会相应更新 -> 理由=雷达图能直观地展示多种技术在多个维度（要求、绕过、防御）上的优劣势，交互性使用户能聚焦于单个技术的分析 -> 库=Chart.js。
-        7. ROP链构建: 目标=组织/通知 -> 方式=简化的点击式交互界面 -> 交互=用户点击“Gadgets”和“数据”来模拟在栈上构建ROP链的过程，并获得即时反馈 -> 理由=将抽象的ROP链概念具体化、游戏化，加深对栈布局和Gadget链接原理的理解 -> 库=无。
+        3. 汇编语言：从零开始: 目标=教学/通知 -> 方式=HTML/CSS卡片式布局，故事化讲解 -> 交互=无 -> 理由=采用情景化教学法，详细拆解核心汇编指令，解释其在程序中的作用和对CPU状态的影响，为初学者建立坚实的汇编基础。
+        4. 汇编基础术语: 目标=通知 -> 方式=HTML/CSS卡片式布局 -> 交互=无 -> 理由=以清晰、结构化的方式呈现核心汇编术语的定义和解释，便于查阅和学习。
+        5. C到汇编探索: 目标=比较/通知 -> 方式=HTML/CSS/JS代码高亮和悬浮提示 -> 交互=鼠标悬停在C代码行上，汇编代码同步高亮；悬停在汇编代码的特定部分，弹出上下文相关的解释 -> 理由=建立高级语言和底层实现之间的直观、深度联系，解释每个汇编指令的精确作用。
+        6. PLT & GOT 流程: 目标=解释流程 -> 方式=HTML/CSS分步点击流程图 -> 交互=点击“下一步”按钮高亮并显示流程中的当前步骤 -> 理由=将复杂的延迟绑定过程分解，逐步引导用户理解，比大段文字更有效 -> 库=无。
+        7. 漏洞利用技术对比: 目标=比较 -> 方式=Chart.js雷达图和动态内容切换 -> 交互=点击按钮切换不同的技术，图表和文本描述会相应更新 -> 理由=雷达图能直观地展示多种技术在多个维度（要求、绕过、防御）上的优劣势，交互性使用户能聚焦于单个技术的分析 -> 库=Chart.js。
+        8. ROP链构建: 目标=组织/通知 -> 方式=简化的点击式交互界面 -> 交互=用户点击“Gadgets”和“数据”来模拟在栈上构建ROP链的过程，并获得即时反馈 -> 理由=将抽象的ROP链概念具体化、游戏化，加深对栈布局和Gadget链接原理的理解 -> 库=无。
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -138,6 +139,7 @@
                     <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">第一部分: 基础</h2>
                     <a href="#intro" data-section="intro" class="nav-link block p-3 rounded-lg">运行中程序的内部图景</a>
                     <a href="#stack-animation" data-section="stack-animation" class="nav-link block p-3 rounded-lg">栈与函数调用 (动画)</a>
+                    <a href="#assembly-from-scratch" data-section="assembly-from-scratch" class="nav-link block p-3 rounded-lg">汇编语言：从零开始</a>
                     <a href="#assembly-basics" data-section="assembly-basics" class="nav-link block p-3 rounded-lg">汇编基础术语</a>
                     <a href="#assembly-explorer" data-section="assembly-explorer" class="nav-link block p-3 rounded-lg">C 到汇编 (探索)</a>
                     <a href="#plt-got" data-section="plt-got" class="nav-link block p-3 rounded-lg">PLT 与 GOT</a>
@@ -257,6 +259,84 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Assembly From Scratch -->
+            <section id="assembly-from-scratch" class="content-section">
+                <h2 class="text-4xl font-bold text-white mb-4">汇编语言：从零开始</h2>
+                <p class="text-lg text-gray-400 mb-8">要真正“Pwn”一个程序，你必须学会说它的语言——汇编。这不是要你手写汇编，而是要能读懂它。本章将通过情景化的方式，带你理解CPU是如何通过汇编指令来执行我们编写的C代码的。</p>
+
+                <div class="space-y-8">
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">第一幕：CPU的“草稿纸”——寄存器</h3>
+                        <p class="mb-6 text-gray-300">想象一下CPU正在做计算，它需要一些临时的地方来存放数字和地址。这些地方就是寄存器，它们是CPU内部最快、最核心的存储单元。对于Pwner来说，最重要的几个“角色”是：</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li><code class="code-inline">RIP</code> (指令指针): 永远指向下一条要执行的指令。**控制它，就控制了一切。**</li>
+                            <li><code class="code-inline">RSP</code> (栈指针): 永远指向栈的顶部。它像一个永远在动的浮标。</li>
+                            <li><code class="code-inline">RBP</code> (基址指针): 像一个锚点，固定在当前函数栈帧的底部，方便我们找到局部变量。</li>
+                            <li><code class="code-inline">RAX</code>: 默认的“快递员”，负责携带函数的返回值。</li>
+                            <li><code class="code-inline">RDI</code>, <code class="code-inline">RSI</code>, <code class="code-inline">RDX</code>... : 另外几位“快递员”，负责传递函数的前几个参数。</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">第二幕：数据的流动——<code class="code-inline">mov</code>指令</h3>
+                        <p class="mb-6 text-gray-300">程序世界里绝大部分时间都在做一件事：搬运数据。而<code class="code-inline">mov</code>指令就是搬运工。它的语法是 <code class="code-inline">mov 目的地, 源</code>。</p>
+                        <div class="bg-gray-800 p-4 rounded-lg font-mono text-sm space-y-2">
+                           <p><code class="code-inline">mov rax, rbx</code>  ; 把rbx寄存器的内容，复制到rax寄存器。</p>
+                           <p><code class="code-inline">mov rax, 10</code>   ; 把数字10，直接放入rax寄存器。</p>
+                           <p><code class="code-inline">mov rax, [rbp-0x8]</code> ; 注意方括号！这不是把`rbp-0x8`这个数值给rax，而是把`rbp-0x8`这个**地址里的内容**取出来，给rax。这是从内存读取。</p>
+                           <p><code class="code-inline">mov [rbp-0x8], rax</code> ; 把rax寄存器的内容，存到`rbp-0x8`这个**地址指向的内存里**。这是写入内存。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">第三幕：改变世界——算术与逻辑指令</h3>
+                        <p class="mb-6 text-gray-300">数据搬运就位后，就要开始计算了。</p>
+                         <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li><code class="code-inline">add rax, rbx</code>: 执行 `rax = rax + rbx`。</li>
+                            <li><code class="code-inline">sub rax, 10</code>: 执行 `rax = rax - 10`。</li>
+                            <li><code class="code-inline">inc rax</code>: `rax++`，将rax的值加1。</li>
+                            <li><code class="code-inline">xor rax, rax</code>: `rax = rax ^ rax`，这是一个将rax清零的常用技巧，因为它比<code class="code-inline">mov rax, 0</code>指令更短。</li>
+                        </ul>
+                    </div>
+
+                     <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">第四幕：程序的逻辑——比较与跳转</h3>
+                        <p class="mb-6 text-gray-300">程序如何实现<code class="code-inline">if-else</code>？答案是两步：比较和跳转。</p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-300">
+                            <li><strong>比较 (<code class="code-inline">cmp</code>)</strong>: <code class="code-inline">cmp rax, rbx</code> 指令会计算`rax - rbx`，但不保存结果。它只根据结果（是正、是负、还是零）来设置CPU内部的一些“标志位”(Flags)。</li>
+                            <li><strong>条件跳转</strong>: 紧跟在<code class="code-inline">cmp</code>后面的跳转指令会检查这些标志位，并决定是否要跳转。
+                                <ul class="list-disc list-inside space-y-2 text-gray-400 mt-2 ml-6">
+                                    <li><code class="code-inline">je</code> (Jump if Equal): 如果上次比较结果为零（即相等），就跳转。</li>
+                                    <li><code class="code-inline">jne</code> (Jump if Not Equal): 如果不相等，就跳转。</li>
+                                    <li><code class="code-inline">jg</code> (Jump if Greater): 如果大于，就跳转。</li>
+                                    <li><code class="code-inline">jl</code> (Jump if Less): 如果小于，就跳转。</li>
+                                </ul>
+                            </li>
+                            <li><strong>无条件跳转 (<code class="code-inline">jmp</code>)</strong>: 不管三七二十一，直接跳转到指定地址。</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">终幕：函数调用的舞蹈——<code class="code-inline">call</code>与<code class="code-inline">ret</code></h3>
+                        <p class="mb-6 text-gray-300">这是所有栈溢出攻击的核心舞台。函数调用和返回是一对精确配合的舞蹈动作，一旦被打乱，程序就会失控。</p>
+                         <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li><strong><code class="code-inline">call function_address</code></strong>: 这个指令做了两件事：
+                                <ol class="list-decimal list-inside text-gray-400 mt-2 ml-6">
+                                    <li>**保存“回家”的路**: 把<code class="code-inline">call</code>指令的**下一条指令**的地址（也就是返回地址）压到栈顶。</li>
+                                    <li>**出发**: 无条件跳转到<code class="code-inline">function_address</code>开始执行。</li>
+                                </ol>
+                            </li>
+                            <li class="mt-4"><strong><code class="code-inline">ret</code></strong>: 这个指令只做一件事：
+                                <ol class="list-decimal list-inside text-gray-400 mt-2 ml-6">
+                                     <li><strong>回家</strong>: 从栈顶弹出一个值，并无条件跳转到这个值所代表的地址。</li>
+                                </ol>
+                            </li>
+                        </ul>
+                        <p class="mt-6 text-amber-300">看出来了吗？<code class="code-inline">call</code>把返回地址存放在栈上，而<code class="code-inline">ret</code>盲目地相信栈上的这个地址。如果我们能通过缓冲区溢出覆写这个地址，那么当函数执行到<code class="code-inline">ret</code>时，它就会乖乖地跳转到我们指定的任何地方。**这就是漏洞利用的本质。**</p>
                     </div>
                 </div>
             </section>
