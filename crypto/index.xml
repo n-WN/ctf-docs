@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cryptos on CTF Docs</title><link>https://n-wn.github.io/ctf-docs/crypto/</link><description>Recent content in Cryptos on CTF Docs</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://n-wn.github.io/ctf-docs/crypto/index.xml" rel="self" type="application/rss+xml"/><item><title>RSA</title><link>https://n-wn.github.io/ctf-docs/crypto/rsa/</link><pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate><guid>https://n-wn.github.io/ctf-docs/crypto/rsa/</guid><description>&lt;h1 id="rsa-初级脚本合集">RSA 初级脚本合集&lt;/h1>
+&lt;h2 id="引言">引言&lt;/h2>
+&lt;p>RSA（Rivest-Shamir-Adleman）是一种非对称加密算法，广泛应用于数据加密和数字签名。它的安全性依赖于大整数分解的困难性。本讲义将深入探讨 RSA 的基本原理、常用工具以及如何根据其数学特性来分类和理解各种攻击方法。&lt;/p>
+&lt;hr>
+&lt;h2 id="一rsa-基础回顾">一、RSA 基础回顾&lt;/h2>
+&lt;h3 id="11-基本原理">1.1 基本原理&lt;/h3>
+&lt;p>RSA 算法涉及三个主要步骤：&lt;strong>密钥生成&lt;/strong>、&lt;strong>加密&lt;/strong>和&lt;strong>解密&lt;/strong>。&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>密钥生成：&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>选择两个大素数 $p$ 和 $q$。&lt;/li>
+&lt;li>计算模数 $n = p \cdot q$。&lt;/li>
+&lt;li>计算欧拉函数 $\phi(n) = (p-1)(q-1)$。&lt;/li>
+&lt;li>选择一个整数 $e$ 作为公钥指数，满足 $1 &amp;lt; e &amp;lt; \phi(n)$ 且 $\gcd(e, \phi(n)) = 1$。&lt;/li>
+&lt;li>计算私钥指数 $d$，满足 $d \cdot e \equiv 1 \pmod{\phi(n)}$。&lt;/li>
+&lt;li>公钥为 $(n, e)$，私钥为 $(n, d)$。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>加密：&lt;/strong>
+明文 $M$ ($0 \le M &amp;lt; n$) 通过公钥 $(n, e)$ 加密为密文 $C$：
+$$C \equiv M^e \pmod{n}$$&lt;/p></description></item></channel></rss>
