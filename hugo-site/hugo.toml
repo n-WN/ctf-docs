@@ -2,9 +2,11 @@
   [[module.mounts]]
     source = "../crypto"
     target = "content/crypto"
+    includeFiles = "**/*.md"
   [[module.mounts]]
     source = "../misc"
     target = "content/misc"
+    includeFiles = "**/*.md"
 
 baseURL = "https://n-wn.github.io/ctf-docs/"
 languageCode = "zh-cn"
