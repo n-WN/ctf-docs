@@ -22,7 +22,7 @@
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>volatility -f OtterCTF.vmem --profile&lt;span style="color:#f92672">=&lt;/span>Win7SP1x64 dumpregistry -o &amp;lt;Hive虚拟内存地址&amp;gt; -D &amp;lt;输出目录&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;li>
-&lt;p>&lt;strong>对转储的 Hive 执行快速 &lt;code>regripper&lt;/code> 分析&lt;/strong>&lt;/p></description></item><item><title/><link>/crypto/rsa/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/crypto/rsa/</guid><description>&lt;h1 id="rsa-初级脚本合集">RSA 初级脚本合集&lt;/h1>
+&lt;p>&lt;strong>对转储的 Hive 执行快速 &lt;code>regripper&lt;/code> 分析&lt;/strong>&lt;/p></description></item><item><title>RSA</title><link>/crypto/rsa/</link><pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate><guid>/crypto/rsa/</guid><description>&lt;h1 id="rsa-初级脚本合集">RSA 初级脚本合集&lt;/h1>
 &lt;h2 id="引言">引言&lt;/h2>
 &lt;p>RSA（Rivest-Shamir-Adleman）是一种非对称加密算法，广泛应用于数据加密和数字签名。它的安全性依赖于大整数分解的困难性。本讲义将深入探讨 RSA 的基本原理、常用工具以及如何根据其数学特性来分类和理解各种攻击方法。&lt;/p>
 &lt;hr>
