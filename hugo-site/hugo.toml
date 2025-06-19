@@ -1,3 +1,11 @@
+[module]
+  [[module.mounts]]
+    source = "../crypto"
+    target = "content/crypto"
+  [[module.mounts]]
+    source = "../misc"
+    target = "content/misc"
+
 baseURL = "https://n-wn.github.io/ctf-docs/"
 languageCode = "zh-cn"
 title = "CTF Docs"
