@@ -19,8 +19,9 @@
         5. 汇编基础术语: 目标=通知 -> 方式=HTML/CSS卡片式布局 -> 交互=无 -> 理由=以清晰、结构化的方式呈现核心汇编术语的定义和解释，便于查阅和学习。
         6. C到汇编探索: 目标=比较/通知 -> 方式=HTML/CSS/JS代码高亮和悬浮提示 -> 交互=鼠标悬停在C代码行上，汇编代码同步高亮；悬停在汇编代码的特定部分，弹出上下文相关的解释 -> 理由=建立高级语言和底层实现之间的直观、深度联系，解释每个汇编指令的精确作用。
         7. PLT & GOT 流程: 目标=解释流程 -> 方式=HTML/CSS分步点击流程图 -> 交互=点击“下一步”按钮高亮并显示流程中的当前步骤 -> 理由=将复杂的延迟绑定过程分解，逐步引导用户理解，比大段文字更有效 -> 库=无。
-        8. 漏洞利用技术对比: 目标=比较 -> 方式=Chart.js雷达图和动态内容切换 -> 交互=点击按钮切换不同的技术，图表和文本描述会相应更新 -> 理由=雷达图能直观地展示多种技术在多个维度（要求、绕过、防御）上的优劣势，交互性使用户能聚焦于单个技术的分析 -> 库=Chart.js。
-        9. ROP链构建: 目标=组织/通知 -> 方式=简化的点击式交互界面 -> 交互=用户点击“Gadgets”和“数据”来模拟在栈上构建ROP链的过程，并获得即时反馈 -> 理由=将抽象的ROP链概念具体化、游戏化，加深对栈布局和Gadget链接原理的理解 -> 库=无。
+        8. ret2text实战演练: 目标=教学/演练 -> 方式=HTML/CSS/JS交互式双栈对比视图 -> 交互=点击按钮触发溢出，可视化展示返回地址被覆盖的过程 -> 理由=将ret2text的抽象理论通过具体的内存变化过程进行展示，加深对栈溢出核心原理的理解。
+        9. 漏洞利用技术对比: 目标=比较 -> 方式=Chart.js雷达图和动态内容切换 -> 交互=点击按钮切换不同的技术，图表和文本描述会相应更新 -> 理由=雷达图能直观地展示多种技术在多个维度（要求、绕过、防御）上的优劣势，交互性使用户能聚焦于单个技术的分析 -> 库=Chart.js。
+        10. ROP链构建: 目标=组织/通知 -> 方式=简化的点击式交互界面 -> 交互=用户点击“Gadgets”和“数据”来模拟在栈上构建ROP链的过程，并获得即时反馈 -> 理由=将抽象的ROP链概念具体化、游戏化，加深对栈布局和Gadget链接原理的理解 -> 库=无。
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -76,12 +77,12 @@
         .anim-code-line.highlight {
             background-color: #f59e0b20;
         }
-        .stack-item, .reg-item {
+        .stack-item, .reg-item, .demo-stack-item {
             transition: all 0.5s ease-in-out;
             opacity: 0;
             transform: translateY(10px);
         }
-        .stack-item.visible, .reg-item.visible {
+        .stack-item.visible, .reg-item.visible, .demo-stack-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -122,6 +123,11 @@
             cursor: help;
             border-bottom: 1px dotted #6b7280; /* gray-500 */
         }
+        .demo-stack-item.overwritten {
+            background-color: #991b1b !important; /* red-800 */
+            border-color: #f87171 !important; /* red-400 */
+            color: #fee2e2; /* red-100 */
+        }
     </style>
 </head>
 <body class="bg-gray-800 text-gray-200">
@@ -139,9 +145,9 @@
                 <div>
                     <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">第一部分: 基础</h2>
                     <a href="#intro" data-section="intro" class="nav-link block p-3 rounded-lg">运行中程序的内部图景</a>
-                    <a href="#stack-animation" data-section="stack-animation" class="nav-link block p-3 rounded-lg">栈与函数调用 (动画)</a>
                     <a href="#compilation-linking" data-section="compilation-linking" class="nav-link block p-3 rounded-lg">从源代码到可执行文件</a>
                     <a href="#assembly-from-scratch" data-section="assembly-from-scratch" class="nav-link block p-3 rounded-lg">汇编语言：从零开始</a>
+                    <a href="#stack-animation" data-section="stack-animation" class="nav-link block p-3 rounded-lg">栈与函数调用 (动画)</a>
                     <a href="#assembly-basics" data-section="assembly-basics" class="nav-link block p-3 rounded-lg">汇编基础术语</a>
                     <a href="#assembly-explorer" data-section="assembly-explorer" class="nav-link block p-3 rounded-lg">C 到汇编 (探索)</a>
                     <a href="#plt-got" data-section="plt-got" class="nav-link block p-3 rounded-lg">PLT 与 GOT</a>
@@ -149,6 +155,7 @@
                 <div>
                     <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider mt-4 mb-2">第二部分: 劫持控制流</h2>
                     <a href="#ret2text" data-section="ret2text" class="nav-link block p-3 rounded-lg">技术一: ret2text</a>
+                    <a href="#ret2text-demo" data-section="ret2text-demo" class="nav-link block p-3 rounded-lg">ret2text: 实战演练</a>
                     <a href="#ret2shellcode" data-section="ret2shellcode" class="nav-link block p-3 rounded-lg">技术二: ret2shellcode</a>
                     <a href="#ret2libc" data-section="ret2libc" class="nav-link block p-3 rounded-lg">技术三: ret2libc & ROP</a>
                     <a href="#one-gadget" data-section="one-gadget" class="nav-link block p-3 rounded-lg">技术四: one-gadget</a>
@@ -552,6 +559,53 @@
                 </div>
             </section>
 
+            <!-- Section: ret2text Demo -->
+            <section id="ret2text-demo" class="content-section">
+                <h2 class="text-4xl font-bold text-white mb-4">ret2text: 实战演练</h2>
+                <p class="text-lg text-gray-400 mb-8">理论结合实践是最好的学习方式。本节将通过一个交互式演练，让您亲眼目睹一个<code class="code-inline">ret2text</code>攻击是如何在内存层面发生的。我们将利用一个包含<code class="code-inline">gets()</code>函数的漏洞来覆写返回地址，并跳转到<code class="code-inline">win()</code>函数。</p>
+                
+                <div class="bg-gray-900 p-6 rounded-xl shadow-2xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-amber-400 mb-4">目标代码</h3>
+                            <pre class="bg-gray-800 p-4 rounded-lg font-mono text-sm">
+void win() {
+    puts("Code execution hijacked!");
+}
+
+void vulnerable() {
+    char buffer[64];
+    puts("Enter your name:");
+    gets(buffer);
+}
+
+void main() {
+    vulnerable();
+}
+                            </pre>
+                            <h3 class="text-2xl font-bold text-amber-400 mt-8 mb-4">攻击载荷 (Payload)</h3>
+                             <p class="text-gray-300 mb-4">我们需要构造一个输入，它由三部分组成：填满缓冲区的垃圾数据、覆写保存的RBP的8个字节、以及我们想要跳转到的<code class="code-inline">win()</code>函数的地址。</p>
+                            <pre class="bg-gray-800 p-4 rounded-lg font-mono text-sm text-center">
+'A' * 64 + 'B' * 8 + 0x401186
+                            </pre>
+                            <div class="text-center mt-8">
+                               <button id="ret2text-execute-btn" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-8 rounded-lg transition-colors text-lg">执行溢出</button>
+                           </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-center mb-2">溢出前的栈</h3>
+                                <div id="stack-before-overflow" class="bg-gray-800 p-4 rounded-lg font-mono text-sm h-[400px] flex flex-col-reverse justify-start relative"></div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-center mb-2">溢出后的栈</h3>
+                                <div id="stack-after-overflow" class="bg-gray-800 p-4 rounded-lg font-mono text-sm h-[400px] flex flex-col-reverse justify-start relative"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
             <section id="ret2shellcode" class="content-section">
                 <h2 class="text-4xl font-bold text-white mb-4">技术二: ret2shellcode (返回到Shellcode)</h2>
                 <p class="text-lg text-gray-400 mb-6">如果程序中没有方便的“后门”函数可供调用，我们可以尝试自己注入一小段机器码（称为<code class="code-inline">shellcode</code>），然后劫持控制流去执行它。通常，我们会把<code class="code-inline">shellcode</code>放置在栈上，并通过溢出将返回地址指向这段<code class="code-inline">shellcode</code>的起始位置。这种技术威力强大，能实现任意代码执行。</p>
@@ -765,6 +819,54 @@
                 }
             };
             stackAnim.init();
+
+            // ret2text demo logic
+            const ret2textBtn = document.getElementById('ret2text-execute-btn');
+            const stackBefore = document.getElementById('stack-before-overflow');
+            const stackAfter = document.getElementById('stack-after-overflow');
+
+            function createStackItem(text, colorClass, isOverwritten = false) {
+                const item = document.createElement('div');
+                item.className = `demo-stack-item p-2 text-xs text-center border-l-4 ${colorClass}`;
+                if (isOverwritten) {
+                    item.classList.add('overwritten');
+                }
+                item.textContent = text;
+                return item;
+            }
+
+            function initRet2textDemo() {
+                stackBefore.innerHTML = '';
+                stackAfter.innerHTML = '';
+
+                // Before
+                stackBefore.appendChild(createStackItem('返回地址 (main)', 'border-red-500 bg-red-900/50'));
+                stackBefore.appendChild(createStackItem('保存的RBP', 'border-green-500 bg-green-900/50'));
+                stackBefore.appendChild(createStackItem('buffer[64]', 'border-blue-500 bg-blue-900/50'));
+
+                // After (initial empty state)
+                stackAfter.appendChild(createStackItem('?', 'border-gray-500 bg-gray-700/50'));
+                stackAfter.appendChild(createStackItem('?', 'border-gray-500 bg-gray-700/50'));
+                stackAfter.appendChild(createStackItem('?', 'border-gray-500 bg-gray-700/50'));
+                 
+                document.querySelectorAll('.demo-stack-item').forEach((el, index) => {
+                    setTimeout(() => el.classList.add('visible'), 50 * index);
+                });
+            }
+            
+            ret2textBtn.addEventListener('click', () => {
+                stackAfter.innerHTML = '';
+                stackAfter.appendChild(createStackItem('0x401186 (win)', 'border-red-500 bg-red-900/50', true));
+                stackAfter.appendChild(createStackItem('BBBBBBBB', 'border-green-500 bg-green-900/50', true));
+                stackAfter.appendChild(createStackItem('AAAAAAAAAAAAAAAA...', 'border-blue-500 bg-blue-900/50', true));
+                
+                document.querySelectorAll('#stack-after-overflow .demo-stack-item').forEach((el, index) => {
+                    setTimeout(() => el.classList.add('visible'), 50 * index);
+                });
+            });
+
+            initRet2textDemo();
+
 
             // Assembly Explorer Logic
             const cCodeContainer = document.getElementById('c-code-container');
