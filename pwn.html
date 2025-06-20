@@ -13,7 +13,7 @@
     <!-- Application Structure Plan: 本应用采用双栏布局。左侧是一个固定的、响应式的侧边栏导航，列出了报告中的所有核心概念。右侧是主内容区。这种设计的目的是提供一个清晰、持续的学习路径图，用户可以按顺序学习，也可以直接跳转到感兴趣的主题。点击侧边栏链接会通过JavaScript动态显示/隐藏主内容区对应的板块，从而在一个单页面内实现流畅的、无需刷新的内容切换。这种结构模仿了在线课程或文档站点的用户体验，非常适合这种结构化、教育性的内容，因为它将用户的注意力集中在当前的主题上，同时保持了整体内容的可见性和可访问性。 -->
     <!-- Visualization & Content Choices: 
         1. 进程内存布局: 目标=组织/通知 -> 方式=HTML/CSS交互式图表 -> 交互=鼠标悬停显示详细信息 -> 理由=比静态图片更具探索性，允许用户主动学习内存段的用途和权限 -> 库=无。
-        2. 栈与函数调用 (动画): 目标=解释流程 -> 方式=HTML/CSS/JS分步动画，包含寄存器视图和代码行指示器 -> 交互=点击按钮触发栈帧、寄存器状态和代码行箭头同步变化 -> 理由=精确模拟x86-64调用约定，将抽象的函数调用过程具体化、可视化，建立底层操作和上层代码的直接联系。
+        2. 栈与函数调用 (动画): 目标=解释流程 -> 方式=HTML/CSS/JS分步动画，通过可视化容器明确区分栈帧 -> 交互=点击按钮触发栈帧、寄存器状态和代码行箭头同步变化 -> 理由=精确模拟x86-64调用约定，将抽象的函数调用过程具体化、可视化，建立栈与栈帧之间清晰的视觉联系。
         3. 编译与链接: 目标=教学/通知 -> 方式=HTML/CSS卡片式分步讲解 -> 交互=无 -> 理由=以情景化方式解释从源代码到可执行文件的完整流程，特别是阐明静态库与共享库(.so)的区别，为理解PLT/GOT奠定基础。
         4. 汇编语言：从零开始: 目标=教学/通知 -> 方式=HTML/CSS卡片式布局，故事化讲解 -> 交互=无 -> 理由=采用情景化教学法，详细拆解核心汇编指令，解释其在程序中的作用和对CPU状态的影响，为初学者建立坚实的汇编基础。
         5. 汇编基础术语: 目标=通知 -> 方式=HTML/CSS卡片式布局 -> 交互=无 -> 理由=以清晰、结构化的方式呈现核心汇编术语的定义和解释，便于查阅和学习。
@@ -76,6 +76,20 @@
         }
         .anim-code-line.highlight {
             background-color: #f59e0b20;
+        }
+        .stack-frame {
+             transition: all 0.5s ease-in-out;
+             border: 2px solid;
+             border-radius: 0.5rem;
+             padding: 0.5rem;
+             margin-top: 0.5rem;
+        }
+        .stack-frame-label {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px dashed;
         }
         .stack-item, .reg-item, .demo-stack-item {
             transition: all 0.5s ease-in-out;
@@ -261,8 +275,8 @@
                                 <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">栈</h3>
                                 <div class="bg-gray-800 p-4 rounded-lg font-mono text-sm h-[450px] flex flex-col-reverse justify-start relative">
                                     <div class="text-xs text-gray-500 absolute top-2 right-2">高地址 ↑</div>
-                                    <div id="stack-visual-container" class="space-y-1">
-                                        <!-- Stack items will be added here -->
+                                    <div id="stack-visual-container" class="space-y-1 w-full">
+                                        <!-- Stack frames will be added here -->
                                     </div>
                                     <div class="text-xs text-gray-500 absolute bottom-2 right-2">低地址 ↓</div>
                                 </div>
@@ -736,38 +750,38 @@ void main() {
                 codeLines: document.querySelectorAll('.anim-code-line'),
                 currentStep: 0,
                 steps: [
-                    { desc: "进入main函数，为其局部变量result分配栈空间。", 
-                      stack: [{ name: "result = 0", type: "local" }], 
+                    { desc: "进入main函数，为其局部变量result创建栈帧。", 
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }] }],
                       regs: { RDI: '?', RSI: '?', RAX: '?', RSP: '0x7ff...c8', RBP: '0x7ff...d0'}, codeLine: 7 },
                     { desc: "准备调用add(5, 10)。参数被加载到RDI和RSI寄存器。",
-                      stack: [{ name: "result = 0", type: "local" }], 
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: '?', RSP: '0x7ff...c8', RBP: '0x7ff...d0' }, highlightRegs: ['RDI', 'RSI'], codeLine: 8 },
                     { desc: "执行 `call add`：将返回地址压入栈，RIP跳转到add函数。", 
-                      stack: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }], 
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: '?', RSP: '0x7ff...c0', RBP: '0x7ff...d0' }, highlightRegs: ['RSP'], codeLine: 8 },
-                    { desc: "add函数序言: `push rbp`，保存main的栈底指针。", 
-                      stack: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }, { name: "旧RBP (main)", type: "rbp" }],
+                    { desc: "add函数序言: `push rbp`，保存main的栈底指针。一个新的栈帧开始建立。", 
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }, { name: "旧RBP (main)", type: "rbp" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: '?', RSP: '0x7ff...b8', RBP: '0x7ff...d0' }, highlightRegs: ['RSP', 'RBP'], codeLine: 1 },
                     { desc: "add函数序言: `mov rbp, rsp`，建立add函数自己的栈帧。", 
-                      stack: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }, { name: "旧RBP (main)", type: "rbp" }], 
+                      frames: [{ name: "add() 栈帧", color: "border-fuchsia-500", items: [{ name: "旧RBP (main)", type: "rbp" }]},{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }] }], 
                       regs: { RDI: 5, RSI: 10, RAX: '?', RSP: '0x7ff...b8', RBP: '0x7ff...b8' }, highlightRegs: ['RSP', 'RBP'], codeLine: 1 },
                     { desc: "为add的局部变量sum分配空间并计算 a + b。", 
-                      stack: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }, { name: "旧RBP (main)", type: "rbp" }, { name: "sum = 15", type: "local" }],
+                      frames: [{ name: "add() 栈帧", color: "border-fuchsia-500", items: [{ name: "sum = 15", type: "local" }, { name: "旧RBP (main)", type: "rbp" }]},{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: '?', RSP: '0x7ff...a8', RBP: '0x7ff...b8' }, highlightRegs: ['RSP'], codeLine: 2 },
                     { desc: "执行add函数体，计算结果放入RAX寄存器作为返回值。", 
-                      stack: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }, { name: "旧RBP (main)", type: "rbp" }, { name: "sum = 15", type: "local" }],
+                      frames: [{ name: "add() 栈帧", color: "border-fuchsia-500", items: [{ name: "sum = 15", type: "local" }, { name: "旧RBP (main)", type: "rbp" }]}, { name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: 15, RSP: '0x7ff...a8', RBP: '0x7ff...b8' }, highlightRegs: ['RAX'], codeLine: 3 },
-                    { desc: "函数结尾: `leave`指令, 恢复调用者的栈帧 (mov rsp, rbp; pop rbp)。", 
-                      stack: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }], 
+                    { desc: "函数结尾: `leave`指令, 恢复调用者的栈帧，销毁add栈帧。", 
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }, { name: "返回地址 (main)", type: "ret" }] }], 
                       regs: { RDI: 5, RSI: 10, RAX: 15, RSP: '0x7ff...c0', RBP: '0x7ff...d0' }, highlightRegs: ['RSP', 'RBP'], codeLine: 4 },
                     { desc: "函数结尾: `ret`指令, 弹出返回地址到RIP，控制流回到main。", 
-                      stack: [{ name: "result = 0", type: "local" }],
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 0", type: "local" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: 15, RSP: '0x7ff...c8', RBP: '0x7ff...d0' }, highlightRegs: ['RSP'], codeLine: 4 },
                     { desc: "回到main函数, 将RAX中的返回值赋给result。",
-                      stack: [{ name: "result = 15", type: "local" }],
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 15", type: "local" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: 15, RSP: '0x7ff...c8', RBP: '0x7ff...d0' }, highlightRegs: [], codeLine: 8 },
                     { desc: "main函数结束。",
-                      stack: [{ name: "result = 15", type: "local" }],
+                      frames: [{ name: "main() 栈帧", color: "border-sky-500", items: [{ name: "result = 15", type: "local" }] }],
                       regs: { RDI: 5, RSI: 10, RAX: 15, RSP: '0x7ff...c8', RBP: '0x7ff...d0' }, highlightRegs: [], codeLine: 9 },
                 ],
                 colors: { local: 'bg-blue-800 border-blue-500', ret: 'bg-red-800 border-red-500', rbp: 'bg-green-800 border-green-500' },
@@ -785,13 +799,29 @@ void main() {
                     this.desc.textContent = stepData.desc;
                     
                     this.stackContainer.innerHTML = '';
-                    stepData.stack.forEach((item, index) => {
-                        const el = document.createElement('div');
-                        el.className = `stack-item p-2 border-l-4 ${this.colors[item.type] || 'bg-gray-700 border-gray-500'}`;
-                        el.textContent = item.name;
-                        this.stackContainer.appendChild(el);
-                        setTimeout(() => el.classList.add('visible'), 50 * index);
+                    stepData.frames.forEach(frameData => {
+                        const frameEl = document.createElement('div');
+                        frameEl.className = `stack-frame ${frameData.color} bg-gray-900/50`;
+                        
+                        const labelEl = document.createElement('div');
+                        labelEl.className = `stack-frame-label ${frameData.color.replace('border', 'text')}`;
+                        labelEl.textContent = frameData.name;
+                        frameEl.appendChild(labelEl);
+
+                        const itemsContainer = document.createElement('div');
+                        itemsContainer.className = "space-y-1";
+
+                        frameData.items.forEach((item, index) => {
+                             const el = document.createElement('div');
+                             el.className = `stack-item p-2 border-l-4 ${this.colors[item.type] || 'bg-gray-700 border-gray-500'}`;
+                             el.textContent = item.name;
+                             itemsContainer.appendChild(el);
+                             setTimeout(() => el.classList.add('visible'), 50 * index);
+                        });
+                        frameEl.appendChild(itemsContainer);
+                        this.stackContainer.appendChild(frameEl);
                     });
+
 
                     this.regContainer.innerHTML = '';
                     for(const regName in stepData.regs) {
