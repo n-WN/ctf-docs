@@ -43,10 +43,10 @@ RSA 的安全性依赖于分解大整数 $n$ 为其素因子 $p$ 和 $q$ 的困�
 
 * **Factordb：** 一个在线整数因子分解数据库。网址：`http://www.factordb.com/`，API：`http://factordb.com/api?query=`
 * **Yafu：** 一款功能强大的命令行因子分解工具，对 $p, q$ 相差过大或过小的情况表现良好。
-* **SageMath：** 一个开源的数学软件系统，内置了 `divisors(n)` 等函数用于小素数分解。在线环境：`https://sagecell.sagemath.org/`
+* **SageMath：** 一个开源的数学软件系统，内置了 `divisors(n)`, `factor(n)` 等函数用于素数分解，性能不及 yafu。在线环境：`https://sagecell.sagemath.org/`
 * **Pollard’s** $p-1$ **方法：** 适用于分解具有小素因子 $p-1$ 的合数 (光滑数)。例如：`python -m primefac -vs -m=p-1 xxxxxxx`
 * **Williams’s** $p+1$ **方法：** 适用于分解具有小素因子 $p+1$ 的合数 (光滑数)。例如：`python -m primefac -vs -m=p+1 xxxxxxx`
-* **CADO-NFS：** 最先进的通用数字域筛法实现，适用于分解非常大的整数。
+* **CADO-NFS：** 最先进的通用数字域筛法实现，适用于分解非常大的整数。也很适合做 DLP。
 
 ### 2.2 OpenSSL 工具
 
