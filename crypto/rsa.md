@@ -11,6 +11,19 @@ RSA（Rivest-Shamir-Adleman）是一种非对称加密算法，广泛应用于�
 
 ---
 
+## 矩阵测试
+
+$$ \begin{bmatrix} X \\ Y \end{bmatrix} $$
+
+```math
+  \begin{bmatrix} 
+    X \\ 
+    Y 
+  \end{bmatrix}
+```
+
+---
+
 ## 一、RSA 基础回顾
 
 ### 1.1 基本原理
